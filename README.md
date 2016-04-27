@@ -3,3 +3,4 @@ A single page web application in which users can upload photos from their mobile
 This application should work on mobile devices using touch-based input.
 ## Demo application
 Link: http://limitless-plains-59206.herokuapp.com/
+Please note that there is a 24MB file limit to which you can upload on this demo application.
