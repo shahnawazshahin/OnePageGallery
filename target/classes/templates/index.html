@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        
+        <title>One Page Gallery</title>
+        
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        
+        <!-- Default styling of page -->
+        <link href="css/default.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div th:if="${message}">
+                <h2 th:text="${message}"/>
+            </div>
+        </div>
+        
+        <div class="container">
+        	<div class="jumbotron text-center">
+	            <form method="POST" enctype="multipart/form-data" action="/pushToGallery">
+	                <div>
+	                    <p>File to upload: <input type="file" name="file" /></p>
+	                    <p><input type="submit" value="Upload" /></p>
+	                </div>
+	            </form>
+			</div>
+        </div>
+        
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-sm-4" th:each="image : ${imageLibrary.images}">
+                    <img th:attr="src=${image.thumbnailPath},title=${image.thumbnailFileName}" />
+                    <p th:text="${image.thumbnailFileName}"></p>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="container-fluid">
+            <div class="container">&nbsp;</div>
+        </footer>
+    </body>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-2.2.3.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</html>

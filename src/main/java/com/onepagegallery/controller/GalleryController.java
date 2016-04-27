@@ -9,13 +9,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onepagegallery.domain.Image;
-import com.onepagegallery.domain.ImageLibrary;
 import com.onepagegallery.service.GalleryService;
 
 /**
@@ -23,8 +25,7 @@ import com.onepagegallery.service.GalleryService;
  *
  * A REST interface for accessing the gallery features of the application.
  */
-@RestController
-@RequestMapping("/gallery")
+@Controller
 public class GalleryController {
 
 	private final GalleryService galleryService;
@@ -35,14 +36,23 @@ public class GalleryController {
 		this.galleryService = galleryService;
 	}
 	
-	@RequestMapping("/pullFromGallery")
-	public ImageLibrary pullFromGallery() {
+	@RequestMapping(method = RequestMethod.GET, value="/")
+	public String pullFromGallery(Model model) {
 		
-		return this.galleryService.retriveGallery();
+		model.addAttribute("imageLibrary", this.galleryService.retriveGallery());
+		
+		return "index";
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value="/pushToGallery")
+	public String pushToGallery() {
+		
+		return "redirect:/";
 	}
 	
-	@RequestMapping("/pushToGallery")
-	public void pushToGallery(@RequestParam("file") MultipartFile file) {
+	@RequestMapping(method = RequestMethod.POST, value="/pushToGallery")
+	public String pushToGallery(@RequestParam("file") MultipartFile file,
+			RedirectAttributes redirectAttributes) {
 
 		String originalFileName = file.getOriginalFilename();
 
@@ -50,14 +60,17 @@ public class GalleryController {
 		//
 		if (originalFileName.contains("/")) {
 
-			throw new FolderSeparatorException("Folder separator(s) (/) were used as the original file name.");
+			redirectAttributes.addFlashAttribute("message", "Folder separator(s) (/) were used as the original file name.");
+			
+			return "redirect:/";
 		}
 		
 		// Check if the file is empty. If so, throw an exception.
 		//
 		if (file.isEmpty()) {
 			
-			throw new MultipartFileIsEmptyException("The Multipart file received is empty.");
+			redirectAttributes.addFlashAttribute("message", "The file received is empty.");
+			return "redirect:/";
 		}
 		
 		// Convert the MultipartFile into an image. If the file is not an image, throw an exception.
@@ -70,11 +83,13 @@ public class GalleryController {
 			
 			if (imageFromFile == null) {
 				
-				throw new FileNotImageException("The file received is not an image file.");
+				redirectAttributes.addFlashAttribute("message", "The file received is not an image file.");
+				return "redirect:/";
 			}
 		} catch (IOException ioEx) {
 			
-			throw new FileNotImageException("The file received is not an image file.");
+			redirectAttributes.addFlashAttribute("message", "The file received is not an image file.");
+			return "redirect:/";
 		}
 
 		// Transfer the information obtained from the MultipatFile to the Image.
@@ -84,5 +99,7 @@ public class GalleryController {
 		image.setOriginalImage(imageFromFile);
 
 		this.galleryService.saveImageToGallery(image);
+		
+		return "redirect:/";
 	}
 }

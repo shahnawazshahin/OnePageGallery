@@ -40,7 +40,7 @@ public class FileSystemImageLibraryGatewayTest {
 	@Test(expected=FolderDoesNotExistException.class)
 	public void nonExistentRootFolder() {
 
-		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("doesnotexist", "uploads/thumbnails");
+		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("doesnotexist", "uploads-test/thumbnails");
 		ImageLibrary imageLibrary = new ImageLibrary(imageLibraryGateway);
 
 		imageLibraryGateway.loadImageLibrary(imageLibrary);
@@ -49,7 +49,7 @@ public class FileSystemImageLibraryGatewayTest {
 	@Test(expected=NullPointerException.class)
 	public void nullThumbnailFolder() {
 
-		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("uploads", null);
+		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("uploads-test", null);
 		ImageLibrary imageLibrary = new ImageLibrary(imageLibraryGateway);
 
 		imageLibraryGateway.loadImageLibrary(imageLibrary);
@@ -58,7 +58,7 @@ public class FileSystemImageLibraryGatewayTest {
 	@Test(expected=FolderDoesNotExistException.class)
 	public void nonExistentThumbnailFolder() {
 
-		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("uploads", "uploads/doesnotexist");
+		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("uploads-test", "uploads-test/doesnotexist");
 		ImageLibrary imageLibrary = new ImageLibrary(imageLibraryGateway);
 
 		imageLibraryGateway.loadImageLibrary(imageLibrary);
@@ -67,7 +67,7 @@ public class FileSystemImageLibraryGatewayTest {
 	@Test
 	public void validFolders() {
 
-		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("uploads", "uploads/thumbnails");
+		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("uploads-test", "uploads-test/thumbnails");
 		ImageLibrary imageLibrary = new ImageLibrary(imageLibraryGateway);
 
 		imageLibraryGateway.loadImageLibrary(imageLibrary);
@@ -94,7 +94,6 @@ public class FileSystemImageLibraryGatewayTest {
 		image.setThumbnailFileName("test.jpg");
 		image.setOriginalImage(bufferedImage);
 		image.setThumbnailImage(bufferedImage);
-		image.setImageType("JPG");
 		
 		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("nonexistent", "nonexistent/thumbnails");
 		imageLibraryGateway.saveImage(image);
@@ -110,9 +109,8 @@ public class FileSystemImageLibraryGatewayTest {
 		image.setThumbnailFileName("test.jpg");
 		image.setOriginalImage(bufferedImage);
 		image.setThumbnailImage(bufferedImage);
-		image.setImageType("JPG");
 		
-		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("uploads", "uploads/thumbnails");
+		ImageLibraryGateway imageLibraryGateway = new FilesystemImageLibraryGateway("uploads-test", "uploads-test/thumbnails");
 		imageLibraryGateway.saveImage(image);
 	}
 }

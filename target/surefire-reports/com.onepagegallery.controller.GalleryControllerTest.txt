@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.onepagegallery.controller.GalleryControllerTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.323 sec - in com.onepagegallery.controller.GalleryControllerTest

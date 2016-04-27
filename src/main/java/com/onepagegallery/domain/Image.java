@@ -14,7 +14,6 @@ public class Image {
 	private String originalFileName;
 	private String thumbnailFileName;
 	private String thumbnailPath;
-	private String imageType;
 	private BufferedImage originalImage;
 	private BufferedImage thumbnailImage;
 	
@@ -40,14 +39,6 @@ public class Image {
 
 	public void setThumbnailPath(String thumbnailPath) {
 		this.thumbnailPath = thumbnailPath;
-	}
-
-	public String getImageType() {
-		return imageType;
-	}
-
-	public void setImageType(String imageType) {
-		this.imageType = imageType;
 	}
 
 	public BufferedImage getOriginalImage() {

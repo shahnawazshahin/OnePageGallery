@@ -25,7 +25,7 @@ public class ApplicationConfig {
 	@Bean
 	public ImageLibraryGateway imageLibraryGateway() {
 		
-		return new FilesystemImageLibraryGateway(this.UPLOADS_FILESYSTEM, this.THUMBNAILS_FILESYSTEM);
+		return new FilesystemImageLibraryGateway(UPLOADS_FILESYSTEM, THUMBNAILS_FILESYSTEM);
 	}
 	
 	@Bean

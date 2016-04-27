@@ -20,6 +20,8 @@ public class Setup implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 
+		// Set up live folders
+		//
 		File rootFolder = new File(ApplicationConfig.UPLOADS_FILESYSTEM);
 		
 		if (!rootFolder.exists()) {
